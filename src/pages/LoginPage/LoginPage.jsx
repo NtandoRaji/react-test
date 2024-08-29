@@ -35,12 +35,12 @@ const LoginPage = () => {
                             <input value={password} onChange={(event) => setPassword(event.target.value)}
                                 data-testid="passwordField" className="inputBox" type="password"/>
                                 
-                            <Button text="Login"/>
+                            <Button data-testid="loginButton" text="Login"/>
                         </form>
                     </section>
                 </section>
             </main>
-            <Popup trigger={displayPopup}>
+            <Popup data-testid="loginPopup" trigger={displayPopup}>
                 <h1> User doesn't exist</h1>
                 <Button onClick={handleLoginButtonClick} text="Close"/>
             </Popup>
