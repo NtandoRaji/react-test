@@ -2,6 +2,7 @@ import React, {useState} from "react";
 
 import Button from "../../components/Button/Button";
 import Popup from "../../components/Popup/Popup";
+import { isValidPassword, isUserExists } from "../../utils/dataValidation";
 
 import projectLogo from "../../assets/images/logo.png";
 
@@ -12,10 +13,33 @@ const LoginPage = () => {
     // Variables
     const [userID, setUserID] = useState("");
     const [password, setPassword] = useState("");
-    const [displayPopup, setDisplayPopup] = useState(true);
+    const [displayPopup, setDisplayPopup] = useState(false);
+    const [popupDisplayText, setPopupDisplayText] = useState("");
 
     // Functions & Logic
-    const handleLoginButtonClick = () => {
+    const handleLoginButtonClick = (event) => {
+        event.preventDefault(); // Prevent the form from submitting
+        let result = isUserExists(userID);
+        
+        if (result["valid"]) { // User does exist.
+            let passwordResult = isValidPassword(password);
+
+            if (passwordResult["valid"]){
+                setPopupDisplayText(result["message"]);
+            }
+            else { // Invalid password
+                setPopupDisplayText(passwordResult["message"]);
+            }
+        }
+
+        else { //User does not exist
+            setPopupDisplayText(result["message"]);
+        }
+
+        setDisplayPopup(true);
+    }
+
+    const handleCloseButtonClick = () => {
         setDisplayPopup(false);
     }
 
@@ -35,14 +59,15 @@ const LoginPage = () => {
                             <input value={password} onChange={(event) => setPassword(event.target.value)}
                                 data-testid="passwordField" className="inputBox" type="password"/>
                                 
-                            <Button data-testid="loginButton" text="Login"/>
+                            <Button onClick={(event) => handleLoginButtonClick(event)} text="Login"/>
                         </form>
                     </section>
                 </section>
             </main>
             <Popup data-testid="loginPopup" trigger={displayPopup}>
-                <h1> User doesn't exist</h1>
-                <Button onClick={handleLoginButtonClick} text="Close"/>
+                <h1> Popup Message </h1>
+                <p> {popupDisplayText} </p>
+                <Button onClick={handleCloseButtonClick} text="Close"/>
             </Popup>
         </>
     );

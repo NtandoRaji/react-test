@@ -38,7 +38,10 @@ const isValidPassword = (password) => {
 
 
 const isUserExists = (userID) => {
-    
-
-    return false;
+    if (Number(userID) === 2584925){
+        return {valid: true, message: "Logged In \\(O_O)/."};
+    }
+    return {valid: false, message:"User does not exist!!!."};
 }
+
+export {isValidPassword, isUserExists};
