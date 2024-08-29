@@ -1,0 +1,21 @@
+.buttonWrapper {
+    width: 100%;
+    height: 40px;
+    background-color: aliceblue;
+    border-radius: 5px;
+}
+
+.buttonWrapper:hover {
+    background-color: #fed130;
+}
+
+.buttonWrapper::after {
+    background-color: aliceblue;
+}
+
+.buttonText {
+    position: relative;
+    text-align: center;
+    font-size: medium;
+    cursor: pointer;
+}
